@@ -45,6 +45,7 @@ def move():
 
 @bottle.post('/end')
 def end():
+    print("GAME OVER\n\n\n")
     # return something
     return {}
 
@@ -56,20 +57,19 @@ def ping():
 
     
 def execute_move(data):
-    
+
+    print("DOING A MOVE\n")
     directions = ['up', 'down', 'left', 'right']
     direction_weights = get_direction_weights(data)
     weights_string = str.format("up: {0:.2f}, down: {1:.2f}, left: {2:.2f}, right: {3:.2f}",
                                 direction_weights[0], direction_weights[1], direction_weights[2], direction_weights[3])
-    print(weights_string)
+
+    print("FINAL WEIGHTS: " + weights_string)
 
     # get index of maximum value in direction_weights
     max_weight, index = choose_direction(direction_weights)
 
-    if max_weight == 0:
-        return {
-            'move': directions[index],
-        }
+    print("MOVING: " + directions[index] + "\n\n")
 
     return {
         'move': directions[index],
@@ -88,8 +88,8 @@ def get_direction_weights(data):
     # pick a direction to move
     weights = list()
 
-    # The direction weights and decision weights added at the same time,
-    weights.append(collisions.avoid_walls(data, 1))
+    # The direction weights and decision weights added at the same time.
+    weights.append(collisions.avoid_walls(data, 10))
     weights.append(collisions.avoid_other_snakes(data, 10))
     weights.append(collisions.chaos_reigns(data, 5))
     # weights.append(freedom.move_to_most_space(data, 4))
@@ -144,7 +144,7 @@ def combine_weights_add(weights):
         direction_values = criteria["direction_values"]
 
         for i in range(4):
-            new_val = direction_values[i]*criteria_weight
+            new_val = direction_values[i] * criteria_weight
             if new_val == 0:
                 combined_weights[i] = 0
             elif combined_weights[i] != 0:
