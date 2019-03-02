@@ -121,4 +121,6 @@ def chaos_reigns(data, weight):
     directions[LEFT] = random.random() * RANGE_MAX
     directions[DOWN] = random.random() * RANGE_MAX
 
-    return criteria["direction_values"] = [x for x in directions]
+    criteria["direction_values"] = [x for x in directions]
+
+    return criteria
