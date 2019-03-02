@@ -91,7 +91,9 @@ def get_direction_weights(data):
     # The direction weights and decision weights added at the same time,
     weights.append(collisions.avoid_walls(data, 1))
     weights.append(collisions.avoid_other_snakes(data, 10))
-    weights.append(freedom.move_to_most_space(data, 4))
+    weights.append(collisions.chaos_reigns(data, 5))
+    # weights.append(freedom.move_to_most_space(data, 4))
+
 
     longest_snake = 0
     our_snake = len(data["you"]["body"])

@@ -1,4 +1,5 @@
 import app.movement as movement
+import random
 from Queue import PriorityQueue
 
 
@@ -58,6 +59,8 @@ def nearest_food_a_star(data, food_weight):
         first_point = {"x": first[0], "y": first[1]}
 
         directions = movement.move_towards(our_head, first_point)
+
+    directions = [(x * random.random()) * 2 for x in directions]
 
     # normalize weighting matrix
     if sum(directions) == 0:

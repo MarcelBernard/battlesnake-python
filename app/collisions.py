@@ -1,5 +1,9 @@
 from app.movement import UP, DOWN, LEFT, RIGHT, points_equal, move_point, move_towards
 
+import random
+
+RANGE_MAX = 10
+
 
 # set of weighting fuctions designed to help us avoid collisions.
 def avoid_walls(data, weight):
@@ -105,3 +109,16 @@ def follow_tail(data, weight):
         criteria["direction_values"] = [x / sum(directions) for x in directions]
 
     return criteria
+
+def chaos_reigns(data, weight):
+    criteria = {"goal": "chaos", "weight": weight}
+
+    # possible directions we can move
+    directions = [1.0, 1.0, 1.0, 1.0]
+
+    directions[RIGHT] = random.random() * RANGE_MAX
+    directions[UP] = random.random() * RANGE_MAX
+    directions[LEFT] = random.random() * RANGE_MAX
+    directions[DOWN] = random.random() * RANGE_MAX
+
+    return criteria["direction_values"] = [x for x in directions]
