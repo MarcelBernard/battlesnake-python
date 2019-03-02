@@ -39,6 +39,47 @@ def avoid_walls(data, weight):
 
     return criteria
 
+def avoid_almost_walls(data, weight):
+       criteria = {"goal": "avoid_almost_walls", "weight": weight}
+    # walls: places with x, y outside the game area
+
+    # where we are
+    us = data["you"]
+    board = data["board"]
+    # first point in list is our head.
+    our_head = us["body"][0]
+
+    # possible directions we can move
+    directions = [1.0, 1.0, 1.0, 1.0]
+
+    if our_head["x"] + 1 >= (board["width"] - 1):
+        directions[RIGHT] = 1
+    else:
+        directions[RIGHT] = 20
+
+    if our_head["x"] - 1 < 1:
+        directions[LEFT] = 1
+    else:
+        directions[LEFT] = 20
+
+    if our_head["y"] + 1 >= (board["height"] - 1):
+        directions[DOWN] = 1
+    else:
+        directions[DOWN] = 20
+
+    if our_head["y"] - 1 < 1:
+        directions[UP] = 1
+    else:
+        directions[UP] = 20
+
+    # normalize weighting matrix
+    if sum(directions) == 0:
+        criteria["direction_values"] = [0.0, 0.0, 0.0, 0.0]
+    else:
+        criteria["direction_values"] = [x / sum(directions) for x in directions]
+
+    return criteria
+
 
 def avoid_other_snakes(data, weight):
     criteria = {"goal": "avoid_other_snakes", "weight": weight}
