@@ -108,11 +108,11 @@ def get_direction_weights(data):
         return [1.0, 1.0, 1.0, 1.0]
 
     if our_snake <= longest_snake:
-        weights.append(food.nearest_food_a_star(data, (1.0 / health) * 10))
+        weights.append(food.nearest_food_a_star(data, (50 / health))
     elif health > 70:
         weights.append(collisions.follow_tail(data, 3))
     else:
-        weights.append(food.nearest_food_a_star(data, (1.0 / health) * 10))
+        weights.append(food.nearest_food_a_star(data, (50 / health))
 
     print(weights)
 
